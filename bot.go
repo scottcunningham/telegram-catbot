@@ -12,7 +12,6 @@ import (
 var telegramToken = os.Getenv("TELEGRAM_TOKEN")
 
 func main() {
-
 	b, err := tb.NewBot(tb.Settings{
 		Token:  telegramToken,
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
