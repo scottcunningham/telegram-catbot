@@ -9,6 +9,18 @@ import (
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
+const helpMessage = `🐱 Options: 🐈‍⬛
+
+/cat -- 🤗 show me a 🐱
+/catfact -- 🤔 tell me about 🐈
+
+CatBot respects 🦮 dogs 🐩 too! Just a little bit less than cats.
+Try these dog commands too:
+
+/dog -- 🙄 show me a 🐕
+/dotfact -- 🤭 tell me about 🐶
+`
+
 var telegramToken = os.Getenv("TELEGRAM_TOKEN")
 
 func main() {
@@ -21,6 +33,10 @@ func main() {
 		log.Fatal(err)
 		return
 	}
+
+	b.Handle("/help", func(m *tb.Message) {
+		b.Send(m.Chat, helpMessage)
+	})
 
 	b.Handle("/cat", func(m *tb.Message) {
 		catURL, err := getCatURL()
