@@ -66,11 +66,11 @@ func main() {
 	})
 
 	b.Handle("/catfact", func(m *tb.Message) {
-		facts, err := getCatFacts()
+		fact, err := randomCatFact()
 		if err != nil {
 			panic(err)
 		}
-		b.Send(m.Chat, facts.RandomFact().Text)
+		b.Send(m.Chat, fact)
 	})
 
 	b.Handle("/dogfact", func(m *tb.Message) {

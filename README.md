@@ -15,7 +15,6 @@ It's publicly available on Telegram as https://t.me/randomcatrobot, but with no 
 Running the code requires the following environment variables to be set:
 
 - TELEGRAM_TOKEN: Bot API token taken from The Botfather on Telegram
-- CAT_FACTS_KEY: API key for the RapidAPI Cat Facts API (see thanks section for URL)
 
 
 ## Docker
@@ -32,6 +31,6 @@ New container images are automatically built from master.
 
 Shout out to my wonderful data sources:
 - https://thecatapi.com/ -- cat pictures!
-- https://rapidapi.com/brianiswu/api/cat-facts -- cat facts!
+- https://catfact.ninja/ -- cat facts!
 - https://dog.ceo/ -- dog pictures!
 - https://dog-api.kinduff.com/api/facts -- dog facts!

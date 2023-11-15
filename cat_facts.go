@@ -3,53 +3,36 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
-	"math/rand"
 	"net/http"
-	"os"
 )
 
-type CatFacts struct {
-	All []CatFact `json:"all"`
-}
-
 type CatFact struct {
-	ID      string `json:"_id"`
-	Type    string `json:"type"`
-	Text    string `json:"text"`
-	Upvotes int    `json:"upvotes"`
+	Fact string `json:"fact"`
 }
 
-var catFactsURL = "https://brianiswu-cat-facts-v1.p.rapidapi.com/facts"
-var catFactsKey = os.Getenv("CAT_FACTS_KEY")
+var catFactsURL = "https://catfact.ninja/fact"
 
-func getCatFacts() (*CatFacts, error) {
+func randomCatFact() (string, error) {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", catFactsURL, nil)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
-	req.Header.Add("x-rapidapi-host", "brianiswu-cat-facts-v1.p.rapidapi.com")
-	req.Header.Add("x-rapidapi-key", catFactsKey)
-	req.Header.Add("useQueryString", "true")
+	req.Header.Add("Accept", "application/json")
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 
-	facts := CatFacts{All: []CatFact{}}
-	err = json.Unmarshal(body, &facts)
+	fact := CatFact{}
+	err = json.Unmarshal(body, &fact)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	return &facts, nil
-}
-
-func (facts *CatFacts) RandomFact() CatFact {
-	idx := rand.Intn(len(facts.All))
-	return facts.All[idx]
+	return fact.Fact, nil
 }
